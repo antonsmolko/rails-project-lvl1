@@ -18,4 +18,12 @@ module HexletCode
       single_template.call(tag_name, attr_s)
     end
   end
+
+  def self.form_for(user, url: "#")
+    get_form = lambda { |f|
+      %(<form action="#{url}" method="post">#{user.name}#{f}</form>)
+    }
+
+    get_form.call("form")
+  end
 end
