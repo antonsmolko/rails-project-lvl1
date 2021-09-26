@@ -31,9 +31,9 @@ module HexletCode
         option_attrs = { value: option }
         option_attrs[:selected] = true if option == value
         option_tag = Tag.build("option", **option_attrs) { option }
-        "\n  #{option_tag}"
+        %(\n#{option_tag})
       end.join
-      Tag.build("select", **attrs) { options }
+      Tag.build("select", **attrs) { %(#{options}\n) }
     end
 
     def self.build(tag_name, attributes = {})
@@ -54,7 +54,7 @@ module HexletCode
 
     yield self
 
-    %(<form action="#{url}" method="post">#{@inputs}</form>)
+    %(<form action="#{url}" method="post">#{@inputs}\n</form>)
   end
 
   def self.input(name, as: :input, collection: [])
@@ -78,6 +78,6 @@ module HexletCode
   end
 
   def self.add_input(tag)
-    @inputs += %("\n  #{tag}")
+    @inputs += %(\n#{tag})
   end
 end
