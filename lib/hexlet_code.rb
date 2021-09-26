@@ -57,13 +57,13 @@ module HexletCode
     %(<form action="#{url}" method="post">#{@inputs}\n</form>)
   end
 
-  def self.input(name, as: :input, collection: [])
+  def self.input(name, as: :input, collection: [], **attrs)
     return unless @user.key?(name)
 
     case as
-    when :input then tag = Tag.build_input(name, @user[name])
-    when :text then tag = Tag.build_textarea(name, @user[name])
-    when :select then tag = Tag.build_select(name, @user[name], collection)
+    when :input then tag = Tag.build_input(name, @user[name], **attrs)
+    when :text then tag = Tag.build_textarea(name, @user[name], **attrs)
+    when :select then tag = Tag.build_select(name, @user[name], collection, **attrs)
     else raise ArgumentError, %(Wrong input type: "#{as}")
     end
 
