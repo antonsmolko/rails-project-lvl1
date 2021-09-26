@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "hexlet_code/version"
+require_relative 'hexlet_code/version'
 
 # HexletCode module
 module HexletCode
@@ -8,21 +8,21 @@ module HexletCode
 
   attr  :inputs, :user, :url
 
-  @inputs = ""
+  @inputs = ''
   @user = nil
   @url = nil
 
   # Tag module returns html string for tag
   module Tag
-    def self.build_input(name, value, type: "text", **attrs)
+    def self.build_input(name, value, type: 'text', **attrs)
       attrs_h = { type: type, name: name, **attrs }
       attrs_h[:value] = value if value
-      Tag.build("input", **attrs_h)
+      Tag.build('input', **attrs_h)
     end
 
     def self.build_textarea(name, value, **attrs)
       attrs_h = { cols: 20, rows: 40, name: name, **attrs }
-      Tag.build("textarea", **attrs_h) { value }
+      Tag.build('textarea', **attrs_h) { value }
     end
 
     def self.build_select(name, value, collection = [], **attrs)
@@ -30,14 +30,14 @@ module HexletCode
       options = collection.map do |option|
         option_attrs = { value: option }
         option_attrs[:selected] = true if option == value
-        option_tag = Tag.build("option", **option_attrs) { option }
+        option_tag = Tag.build('option', **option_attrs) { option }
         %(\n#{option_tag})
       end.join
-      Tag.build("select", **attrs_h) { %(#{options}\n) }
+      Tag.build('select', **attrs_h) { %(#{options}\n) }
     end
 
     def self.build(tag_name, attributes = {})
-      attrs_s = attributes.reduce("") do |memo, (key, value)|
+      attrs_s = attributes.reduce('') do |memo, (key, value)|
         attr_s = value == true ? key : %(#{key}="#{value}")
         %(#{memo} #{attr_s})
       end
@@ -48,7 +48,7 @@ module HexletCode
     end
   end
 
-  def self.form_for(user, url: "#")
+  def self.form_for(user, url: '#')
     @user = user.to_h
     @url = url
 
@@ -67,13 +67,13 @@ module HexletCode
     else raise ArgumentError, %(Wrong input type: "#{as}")
     end
 
-    label = Tag.build("label", for: name) { name.capitalize }
+    label = Tag.build('label', for: name) { name.capitalize }
     add_input(label)
     add_input(tag)
   end
 
-  def self.submit(value = "Save")
-    tag = Tag.build_input("commit", value, type: "submit")
+  def self.submit(value = 'Save')
+    tag = Tag.build_input('commit', value, type: 'submit')
     add_input(tag)
   end
 
