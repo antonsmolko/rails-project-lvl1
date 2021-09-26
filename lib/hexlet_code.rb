@@ -14,8 +14,8 @@ module HexletCode
 
   # Tag module returns html string for tag
   module Tag
-    def self.build_input(name, value)
-      attrs = { type: "text", name: name }
+    def self.build_input(name, value, type: "text")
+      attrs = { type: type, name: name }
       attrs[:value] = value if value
       Tag.build("input", **attrs)
     end
@@ -67,6 +67,8 @@ module HexletCode
     else raise ArgumentError, %(Wrong input type: "#{as}")
     end
 
+    label = Tag.build("label", for: name) { name.capitalize }
+    add_input(label)
     add_input(tag)
   end
 
