@@ -6,24 +6,67 @@ require_relative "hexlet_code/version"
 module HexletCode
   class Error < StandardError; end
 
+  attr  :inputs, :user, :url
+
+  @inputs = ""
+  @user = nil
+  @url = nil
+
   # Tag module returns html string for tag
   module Tag
+    def self.build_input(name, value)
+      attrs = { type: "text", name: name }
+      attrs[:value] = value if value
+      Tag.build("input", **attrs)
+    end
+
+    def self.build_textarea(name, value)
+      attrs = { cols: 20, rows: 40, name: name }
+      Tag.build("textarea", **attrs) { value }
+    end
+
+    def self.build_select(name, value, collection = [])
+      attrs = { name: name }
+      options = collection.map do |option|
+        option_attrs = { value: option }
+        option_attrs[:selected] = true if option == value
+        option_tag = Tag.build("option", **option_attrs) { option }
+        "\n  #{option_tag}"
+      end.join
+      Tag.build("select", **attrs) { options }
+    end
+
     def self.build(tag_name, attributes = {})
-      attr_s = attributes.reduce("") { |memo, (key, value)| %(#{memo} #{key}="#{value}") }
-      single_template = ->(name, attrs) { "<#{name}#{attrs}/>" }
-      pair_template = ->(name, attrs, body) { "<#{name}#{attrs}>#{body}</#{name}>" }
+      attrs_s = attributes.reduce("") do |memo, (key, value)|
+        attr_s = value == true ? key : %(#{key}="#{value}")
+        %(#{memo} #{attr_s})
+      end
 
-      return pair_template.call(tag_name, attr_s, yield) if block_given?
+      return %(<#{tag_name}#{attrs_s}>#{yield}</#{tag_name}>) if block_given?
 
-      single_template.call(tag_name, attr_s)
+      %(<#{tag_name}#{attrs_s}/>)
     end
   end
 
   def self.form_for(user, url: "#")
-    get_form = lambda { |f|
-      %(<form action="#{url}" method="post">#{user.name}#{f}</form>)
-    }
+    @user = user.to_h
+    @url = url
 
-    get_form.call("form")
+    yield self
+
+    %(<form action="#{url}" method="post">#{@inputs}</form>)
+  end
+
+  def self.input(name, as: :input, collection: [])
+    return unless @user.key?(name)
+
+    case as
+    when :input then tag = Tag.build_input(name, @user[name])
+    when :text then tag = Tag.build_textarea(name, @user[name])
+    when :select then tag = Tag.build_select(name, @user[name], collection)
+    else raise ArgumentError, %(Wrong input type: "#{as}")
+    end
+
+    @inputs += %("\n  #{tag}")
   end
 end
