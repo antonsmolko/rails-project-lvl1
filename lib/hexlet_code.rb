@@ -67,6 +67,15 @@ module HexletCode
     else raise ArgumentError, %(Wrong input type: "#{as}")
     end
 
+    add_input(tag)
+  end
+
+  def self.submit(value = "Save")
+    tag = Tag.build_input("commit", value, type: "submit")
+    add_input(tag)
+  end
+
+  def self.add_input(tag)
     @inputs += %("\n  #{tag}")
   end
 end
