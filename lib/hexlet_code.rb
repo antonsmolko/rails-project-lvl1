@@ -14,26 +14,26 @@ module HexletCode
 
   # Tag module returns html string for tag
   module Tag
-    def self.build_input(name, value, type: "text")
-      attrs = { type: type, name: name }
-      attrs[:value] = value if value
-      Tag.build("input", **attrs)
+    def self.build_input(name, value, type: "text", **attrs)
+      attrs_h = { type: type, name: name, **attrs }
+      attrs_h[:value] = value if value
+      Tag.build("input", **attrs_h)
     end
 
-    def self.build_textarea(name, value)
-      attrs = { cols: 20, rows: 40, name: name }
-      Tag.build("textarea", **attrs) { value }
+    def self.build_textarea(name, value, **attrs)
+      attrs_h = { cols: 20, rows: 40, name: name, **attrs }
+      Tag.build("textarea", **attrs_h) { value }
     end
 
-    def self.build_select(name, value, collection = [])
-      attrs = { name: name }
+    def self.build_select(name, value, collection = [], **attrs)
+      attrs_h = { name: name, **attrs }
       options = collection.map do |option|
         option_attrs = { value: option }
         option_attrs[:selected] = true if option == value
         option_tag = Tag.build("option", **option_attrs) { option }
         %(\n#{option_tag})
       end.join
-      Tag.build("select", **attrs) { %(#{options}\n) }
+      Tag.build("select", **attrs_h) { %(#{options}\n) }
     end
 
     def self.build(tag_name, attributes = {})
