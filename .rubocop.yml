@@ -8,9 +8,6 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
-#
-#Naming/MethodParameterName:
-#  AllowedNames: [as]
 
 Layout/LineLength:
   Max: 120
