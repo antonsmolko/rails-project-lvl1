@@ -25,7 +25,8 @@ module HexletCode
       Tag.build('textarea', **attrs_h) { value }
     end
 
-    def self.build_select(name, value, collection = [], **attrs)
+    def self.build_select(name, value, **attrs)
+      collection = attrs.delete(:collection) || []
       attrs_h = { name: name, **attrs }
       options = collection.map do |option|
         option_attrs = { value: option }
@@ -57,15 +58,16 @@ module HexletCode
     %(<form action="#{url}" method="post">#{@inputs}\n</form>)
   end
 
-  def self.input(name, as: :input, collection: [], **attrs)
+  def self.input(name, **attrs)
     return unless @user.key?(name)
 
-    case as
-    when :input then tag = Tag.build_input(name, @user[name], **attrs)
-    when :text then tag = Tag.build_textarea(name, @user[name], **attrs)
-    when :select then tag = Tag.build_select(name, @user[name], collection, **attrs)
-    else raise ArgumentError, %(Wrong input type: "#{as}")
-    end
+    as = attrs.delete(:as)
+
+    tag = case as
+          when :text then Tag.build_textarea(name, @user[name], **attrs)
+          when :select then Tag.build_select(name, @user[name], **attrs)
+          else Tag.build_input(name, @user[name], **attrs)
+          end
 
     label = Tag.build('label', for: name) { name.capitalize }
     add_input(label)
