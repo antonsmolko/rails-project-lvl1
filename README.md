@@ -25,6 +25,8 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
+User = Struct.new :name, :job, :gender, keyword_init: true
+
 user = User.new name: 'rob', job: 'hexlet', gender: 'm'
 
 form = HexletCode.form_for user do |f|
