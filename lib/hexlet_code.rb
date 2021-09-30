@@ -24,7 +24,7 @@ module HexletCode
   class Form
     # Input class returns html input field
     class Input
-      def self.build(name, value, type: 'text', **attrs)
+      def self.build(name, value: nil, type: 'text', **attrs)
         attrs_h = { type: type, name: name, **attrs }
         attrs_h[:value] = value if value
 
@@ -34,7 +34,7 @@ module HexletCode
 
     # Textarea class returns html textarea field
     class Textarea
-      def self.build(name, value, **attrs)
+      def self.build(name, value: nil, **attrs)
         attrs_h = { cols: 20, rows: 40, name: name, **attrs }
 
         Tag.build('textarea', **attrs_h) { value }
@@ -43,7 +43,7 @@ module HexletCode
 
     # Select class returns html select field
     class Select
-      def self.build(name, value, **attrs)
+      def self.build(name, value: nil, **attrs)
         collection = attrs.delete(:collection) || []
         attrs_h = { name: name, **attrs }
         options = collection.map do |option|
@@ -68,13 +68,13 @@ module HexletCode
       Tag.build('form', action: action, method: method) { inner }
     end
 
-    def self.build_group(name, value, **attrs)
+    def self.build_group(name, **attrs)
       as = attrs.delete(:as)
 
       control = case as
-                when :text then Textarea.build(name, value, attrs)
-                when :select then Select.build(name, value, attrs)
-                else Input.build(name, value, attrs)
+                when :text then Textarea.build(name, **attrs)
+                when :select then Select.build(name, **attrs)
+                else Input.build(name, **attrs)
                 end
 
       label = Label.build(name)
@@ -96,13 +96,13 @@ module HexletCode
     def input(name, **attrs)
       return unless @user.key?(name)
 
-      form_group = Form.build_group(name, @user[name], attrs)
+      form_group = Form.build_group(name, value: @user[name], **attrs)
 
       add_input(form_group)
     end
 
     def submit(value = 'Save')
-      submit = Form::Input.build('commit', value, type: 'submit')
+      submit = Form::Input.build('commit', value: value, type: 'submit')
       add_input(submit)
     end
 
