@@ -24,7 +24,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+
+form = HexletCode.form_for user do |f|
+  f.input :name
+  f.input :job, as: :text
+  f.input :gender, as: :select, collection: %w[m f]
+  f.submit
+end
+
+p form
+
+# <form action="#" method="post">
+# <label for="name">Name</label>
+# <input type="text" name="name" value="rob"/>
+# <label for="job">Job</label>
+# <textarea cols="20" rows="40" name="job">hexlet</textarea>
+# <label for="gender">Gender</label>
+# <select name="gender">
+# <option value="m" selected>m</option>
+# <option value="f">f</option>
+# </select>
+# <input type="submit" name="commit" value="Save"/>
+# </form>
+```
 
 ## Development
 

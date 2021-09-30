@@ -7,8 +7,6 @@ class HexletCodeTest < Minitest::Test
     refute_nil ::HexletCode::VERSION
   end
 
-  User = Struct.new :name, :job, :gender, keyword_init: true
-
   def test_form_generator
     user = User.new name: 'rob', job: 'hexlet', gender: 'm'
     expected = File.open(File.expand_path('../test/expected.html', __dir__), 'r').read
