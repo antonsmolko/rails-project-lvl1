@@ -11,6 +11,6 @@ module FixtureHelper
   end
 end
 
-class Minitest::Test
+class HexletCodeTest < Minitest::Test
   include FixtureHelper
 end
