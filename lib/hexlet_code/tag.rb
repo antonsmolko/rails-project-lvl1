@@ -5,7 +5,7 @@ module HexletCode
   module Tag
     def self.build(tag_name, attributes = {})
       attrs_s = attributes.map do |key, value|
-        value === true ? %(#{key}) : %(#{key}="#{value}")
+        value == true ? key : %(#{key}="#{value}")
       end.join(' ')
 
       single_tags = %w(area base br col command embed hr img input keygen link meta param source track wbr)
