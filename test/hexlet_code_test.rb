@@ -11,7 +11,7 @@ class HexletCodeTest < Minitest::Test
 
   def test_form_generator
     user = User.new name: 'rob', job: 'hexlet', gender: 'm'
-    expected = File.open(File.expand_path('../test/fixtures/expected.html', __dir__), 'r').read
+    expected = read_fixture_file('expected.html')
 
     form = HexletCode.form_for user do |f|
       f.input :name
