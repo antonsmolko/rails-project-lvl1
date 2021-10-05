@@ -1,34 +1,33 @@
 # frozen_string_literal: true
 
-require_relative 'tag'
-require_relative 'input'
-require_relative 'select'
-require_relative 'textarea'
-require_relative 'label'
-
+# HexletCode module
 module HexletCode
+  autoload :Tag, 'hexlet_code/tag'
+  autoload :Label, 'hexlet_code/label'
+
   # Form class with form field collection
   class Form
-    def self.build(action, method, inner)
-      Tag.build('form', action: action, method: method) { inner }
+    def initialize(inputs)
+      @inputs = inputs
     end
 
-    def self.build_group(name, **attrs)
+    def build(action, method, inner)
+      Tag.build('form', action: action, method: method) { %(\n#{inner}\n) }
+    end
+
+    def build_group(**attrs)
+      name = attrs.delete(:name)
       as = attrs.delete(:as)
 
-      control = case as
-                when :text then Textarea.build(name, **attrs)
-                when :select then Select.build(name, **attrs)
-                else Input.build(name, **attrs)
-                end
+      group = []
+      group << Label.build(name) unless %w[submit reset hidden button].include?(attrs[:type])
+      group << case as
+               when :text then @inputs::Textarea.new(name, **attrs).build
+               when :select then @inputs::Select.new(name, **attrs).build
+               else @inputs::Base.new(name, **attrs).build
+               end
 
-      label = Label.build(name)
-
-      %(#{label}\n#{control})
-    end
-
-    def self.build_submit(value)
-      Input.build('commit', value: value, type: 'submit')
+      group.join("\n")
     end
   end
 end
