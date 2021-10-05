@@ -15,7 +15,7 @@ module HexletCode
       Tag.build('form', action: action, method: method) { %(\n#{inner}\n) }
     end
 
-    def build_group(**attrs)
+    def build_group(attrs)
       name = attrs.delete(:name)
       as = attrs.delete(:as)
 
