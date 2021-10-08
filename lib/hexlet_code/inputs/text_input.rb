@@ -7,8 +7,8 @@ module HexletCode
   autoload :Tag, 'hexlet_code/tag'
 
   module Inputs
-    # Textarea class returns html textarea field
-    class Textarea < Base
+    # Textarea class returns html textarea
+    class TextInput < Base
       def build
         attrs_h = { cols: 20, rows: 40, name: @name, **@attrs }
 

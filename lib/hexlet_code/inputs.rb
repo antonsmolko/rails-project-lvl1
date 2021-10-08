@@ -3,8 +3,8 @@
 module HexletCode
   # Inputs module
   module Inputs
-    autoload :Base, 'hexlet_code/inputs/base'
-    autoload :Select, 'hexlet_code/inputs/select'
-    autoload :Textarea, 'hexlet_code/inputs/textarea'
+    autoload :StringInput, 'hexlet_code/inputs/string_input'
+    autoload :SelectInput, 'hexlet_code/inputs/select_input'
+    autoload :TextInput, 'hexlet_code/inputs/text_input'
   end
 end

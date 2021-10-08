@@ -7,8 +7,8 @@ module HexletCode
   autoload :Tag, 'hexlet_code/tag'
 
   module Inputs
-    # Select class returns html select field
-    class Select < Base
+    # Select class returns html select
+    class SelectInput < Base
       def build
         collection = @attrs.delete(:collection) || []
         attrs_h = { name: @name, **@attrs }

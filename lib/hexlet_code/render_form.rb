@@ -8,7 +8,7 @@ module HexletCode
   # RenderForm class - html form render
   class RenderForm
     def self.build(inputs, method, url)
-      form = Form.new(Inputs)
+      form = Form.new
 
       inner = inputs.map { |attrs| form.build_group(attrs) }.join("\n")
 

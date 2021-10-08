@@ -4,27 +4,14 @@ require_relative 'hexlet_code/version'
 
 # HexletCode module
 module HexletCode
+  autoload :GenerateForm, 'hexlet_code/generate_form'
   autoload :RenderForm, 'hexlet_code/render_form'
 
-  @inputs = []
-  @entity = nil
-
-  def self.input(name, **attrs)
-    return unless @entity.key?(name)
-
-    @inputs << { name: name, value: @entity[name], **attrs }
-  end
-
-  def self.submit(value = 'Save')
-    @inputs << { name: 'commit', value: value, type: 'submit' }
-  end
-
   def self.form_for(entity, url: '#')
-    @entity = entity.to_h
-    @inputs = []
+    form_generator = GenerateForm.new(entity.to_h)
 
-    yield self
+    yield form_generator
 
-    RenderForm.build(@inputs, 'post', url)
+    RenderForm.build(form_generator.inputs, 'post', url)
   end
 end

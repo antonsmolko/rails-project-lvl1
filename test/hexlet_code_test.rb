@@ -12,7 +12,7 @@ class HexletCodeTest < Minitest::Test
 
   def test_simple_form
     user = User1.new name: 'rob', job: 'hexlet', gender: 'm'
-    expected = read_fixture_file('expected_1.html')
+    expected = read_fixture_file('form_simple.html')
 
     form = HexletCode.form_for user do |f|
       f.input :name
@@ -26,7 +26,7 @@ class HexletCodeTest < Minitest::Test
 
   def test_complex_form
     user = User2.new name: 'vika', age: 39, job: 'google', citizenship: %w[russia england]
-    expected = read_fixture_file('expected_2.html')
+    expected = read_fixture_file('form_complex.html')
     form = HexletCode.form_for user do |f|
       f.input :name
       f.input :age
