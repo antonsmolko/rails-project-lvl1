@@ -20,9 +20,7 @@ module HexletCode
 
       group = []
       group << Label.build(name) unless %w[submit reset hidden button].include?(attrs[:type])
-
       group << klass.new(name, **attrs).build
-
       group.join("\n")
     end
   end
