@@ -2,8 +2,8 @@
 
 # HexletCode module
 module HexletCode
-  # GenerateForm class - build inputs collections
-  class GenerateForm
+  # FormGenerator class - build inputs collections
+  class FormGenerator
     attr_reader :inputs
 
     def initialize(entity)

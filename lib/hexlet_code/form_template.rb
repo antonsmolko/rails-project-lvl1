@@ -4,9 +4,16 @@
 module HexletCode
   autoload :Tag, 'hexlet_code/tag'
   autoload :Label, 'hexlet_code/label'
+  autoload :Inputs, 'hexlet_code/inputs'
 
-  # Form class with form field collection
-  class Form
+  # FormTemplate class - html form render
+  class FormTemplate
+    def initialize(inputs, method, url = '#')
+      @inputs = inputs
+      @method = method
+      @url = url
+    end
+
     def build(action, method, inner)
       Tag.build('form', action: action, method: method) { %(\n#{inner}\n) }
     end
@@ -22,6 +29,11 @@ module HexletCode
       group << Label.build(name) unless %w[submit reset hidden button].include?(attrs[:type])
       group << klass.new(name, **attrs).build
       group.join("\n")
+    end
+
+    def render
+      inner = @inputs.map { |attrs| build_group(attrs) }.join("\n")
+      build(@url, @method, inner)
     end
   end
 end

@@ -4,14 +4,15 @@ require_relative 'hexlet_code/version'
 
 # HexletCode module
 module HexletCode
-  autoload :GenerateForm, 'hexlet_code/generate_form'
-  autoload :RenderForm, 'hexlet_code/render_form'
+  autoload :FormGenerator, 'hexlet_code/form_generator'
+  autoload :FormTemplate, 'hexlet_code/form_template'
 
   def self.form_for(entity, url: '#')
-    form_generator = GenerateForm.new(entity.to_h)
+    form_generator = FormGenerator.new(entity.to_h)
 
     yield form_generator
 
-    RenderForm.build(form_generator.inputs, 'post', url)
+    form_template = FormTemplate.new(form_generator.inputs, 'post', url)
+    form_template.render
   end
 end
