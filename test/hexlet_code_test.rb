@@ -27,7 +27,7 @@ class HexletCodeTest < Minitest::Test
   def test_complex_form
     user = User2.new name: 'vika', age: 39, job: 'google', citizenship: %w[russia england]
     expected = read_fixture_file('form_complex.html')
-    form = HexletCode.form_for user do |f|
+    form = HexletCode.form_for user, url: '/users/1' do |f|
       f.input :name
       f.input :age
       f.input :job, as: :text

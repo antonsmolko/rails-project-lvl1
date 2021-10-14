@@ -4,7 +4,7 @@
 module HexletCode
   # FormTemplate class - html form render
   class FormTemplate
-    def initialize(inputs, method, url = '#')
+    def initialize(inputs, url, method = 'post')
       @inputs = inputs
       @method = method
       @url = url
