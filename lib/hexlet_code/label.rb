@@ -2,8 +2,6 @@
 
 # HexletCode module
 module HexletCode
-  autoload :Tag, 'hexlet_code/tag'
-
   # Label class returns html label
   class Label
     def self.build(name)

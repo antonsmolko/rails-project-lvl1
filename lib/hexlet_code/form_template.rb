@@ -2,10 +2,6 @@
 
 # HexletCode module
 module HexletCode
-  autoload :Tag, 'hexlet_code/tag'
-  autoload :Label, 'hexlet_code/label'
-  autoload :Inputs, 'hexlet_code/inputs'
-
   # FormTemplate class - html form render
   class FormTemplate
     def initialize(inputs, method, url = '#')

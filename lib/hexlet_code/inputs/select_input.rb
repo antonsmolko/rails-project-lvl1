@@ -4,8 +4,6 @@ require_relative 'base'
 
 # HexletCode module
 module HexletCode
-  autoload :Tag, 'hexlet_code/tag'
-
   module Inputs
     # Select class returns html select
     class SelectInput < Base

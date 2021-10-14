@@ -4,8 +4,6 @@ require_relative 'base'
 
 # HexletCode module
 module HexletCode
-  autoload :Tag, 'hexlet_code/tag'
-
   module Inputs
     # Textarea class returns html textarea
     class TextInput < Base

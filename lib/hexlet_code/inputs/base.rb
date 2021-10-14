@@ -2,8 +2,6 @@
 
 # HexletCode module
 module HexletCode
-  autoload :Tag, 'hexlet_code/tag'
-
   module Inputs
     # BaseInput class
     class Base
