@@ -4,7 +4,7 @@ module HexletCode
   # Tag module returns html string for tag
   module Tag
     def self.build(tag_name, attributes = {})
-      attrs_s = attributes.reject { |_, value| value.nil? }.map do |key, value|
+      attrs_s = attributes.compact.map do |key, value|
         value == true ? key : %(#{key}="#{value}")
       end.join(' ')
 
